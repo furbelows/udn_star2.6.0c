@@ -1,0 +1,131 @@
+{
+  "name": "udn_star2.6.0c",
+  "title": "udn_star2.6.0c",
+  "summary": "udn_star2.6.0c",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "read1_fastq",
+      "label": "read1_fastq",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.gz"
+      ],
+      "help": "gzip file of read1 fastq"
+    },
+    {
+      "name": "read2_fastq",
+      "label": "read2_fastq",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.gz"
+      ],
+      "help": "gzip file of read2 fastq"
+    },
+    {
+      "name": "star_index_75bp",
+      "label": "star_index_75bp",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.tar"
+      ],
+      "help": "STAR index file for 75bp reads (tar format, no need to compress)"
+    },
+    {
+      "name": "star_index_69bp",
+      "label": "star_index_69bp",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.tar"
+      ],
+      "help": "STAR index for 69bp reads"
+    },
+    {
+      "name": "star_index_120bp",
+      "label": "star_index_120bp",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.tar"
+      ],
+      "help": "STAR index for 120bp reads"
+    },    
+    {
+      "name": "sample",
+      "label": "sample",
+      "class": "string",
+      "optional": false,
+      "help": "Sample ID for SAM header"
+    },
+    {
+      "name": "library",
+      "label": "library",
+      "class": "string",
+      "optional": true,
+      "help": "Optional: Library for SAM header (otherwise will be automatically set to sample name)"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "aligned_bam",
+      "label": "aligned_bam",
+      "class": "file",
+      "patterns": [
+        "*.Aligned.out.bam"
+      ],
+      "help": "STAR genome alignment (Unsorted!)"
+    },
+    {
+      "name": "transcriptome_bam",
+      "label": "transcriptome_bam",
+      "class": "file",
+      "patterns": [
+        "*.Aligned.toTranscriptome.out.bam"
+      ],
+      "help": "STAR transcriptome alignment"
+    },
+    {
+      "name": "sjout_tab",
+      "label": "sjout_tab",
+      "class": "file",
+      "patterns": [
+        "*.SJ.out.tab.gz"
+      ],
+      "help": "STAR splice junction table"
+    },
+    {
+      "name": "final_log",
+      "label": "final_log",
+      "class": "file",
+      "patterns": [
+        "*.Log.final.out"
+      ],
+      "help": "STAR final log file"
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 10
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/udn_star2.6.0c.sh"
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_x8"
+        }
+      }
+    }
+  }
+}
